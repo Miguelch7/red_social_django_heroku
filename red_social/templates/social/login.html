@@ -1,0 +1,15 @@
+{% extends 'social/layout.html' %}
+{% block content %}
+
+<h1 class="title">Iniciar Sesión</h1>
+
+<form class="form" method="POST">
+  {% csrf_token %}
+  {{form.as_p}}
+
+  <button type="submit" id="submit">Iniciar Sesión</button>
+  <p>Si no posee una cuenta, regístrese <a class="blue" href="{% url 'register' %}">aquí</a></p>
+
+</form>
+
+{% endblock %}

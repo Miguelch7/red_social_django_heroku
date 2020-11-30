@@ -1,0 +1,14 @@
+{% extends 'social/layout.html' %}
+{% block content %}
+
+<h1 class="title">Editar perfil</h1>
+
+<form class="form" enctype="multipart/form-data" method="POST">
+  {% csrf_token %}
+  {{form.as_p}}
+  <button type="submit" id="submit">Guardar cambios</button>
+  <p>Si desea cambiar la contraseña, haga click <a class="blue" href="{% url 'change_password' %}">aquí</a></p>
+  <p>Si desea cambiar su foto de perfil, haga click <a class="blue" href="{% url 'change_image' request.user.username %}">aquí</a></p>
+</form>
+
+{% endblock %}

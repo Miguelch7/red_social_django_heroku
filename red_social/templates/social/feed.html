@@ -1,0 +1,36 @@
+{% extends 'social/layout.html' %}
+{% load humanize %}
+{% block content %}
+
+{% for post in posts %}
+
+<article>
+    <div class="container-article">
+        <img src="{{ post.user.profile.image.url }}">
+        <div>
+            <h2 class="username"><a href="{% url 'profile' post.user.username %}">@{{post.user.username}}</a>
+              {% if request.user == post.user %}
+                <i class="you"> - you</i>
+              {% endif %}
+            </h2>
+            <i class="clock"></i>
+            <time data-time="#">{{ post.timestamp|naturaltime }}</time>
+            <div class="post">{{ post.content }}</div>
+            <br>
+            <a class="option" href="{% url 'post' post.id %}">Ver post</a>
+            {% if request.user == post.user %}
+            |
+            <a class="blue" href="{% url 'post_edit' post.id %}">Editar</a>
+            |
+            <a class="red" href="{% url 'post_delete' post.id %}">Eliminar</a>
+            {% endif %}
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+</article>
+
+{% endfor %}
+
+{% endblock %}

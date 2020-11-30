@@ -1,0 +1,15 @@
+{% extends 'social/layout.html' %}
+{% block content %}
+
+<h1 class="title">Cambiar foto de perfil</h1>
+<div class="profile">
+  <img class="profile_image" src="{{ image_profile }}" alt="" width="200" height="200">
+</div>
+<form class="form" enctype="multipart/form-data" method="POST">
+  {% csrf_token %}
+  {{form.as_p}}
+
+  <button type="submit" id="submit">Actualizar foto</button>
+</form>
+
+{% endblock %}

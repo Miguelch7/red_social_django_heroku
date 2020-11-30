@@ -1,0 +1,29 @@
+{% load humanize %}
+
+<!-- Post -->
+<h1 class="comments">{{ post.comments.count }} Comentarios</h1>
+
+{% for comment in comments %}
+<article>
+    <div class="container-article">
+        <img class="post_comment" src="{{ comment.from_user.profile.image.url }}">
+        <div>
+            <h3 class="username"><a href="{% url 'profile' post.user.username %}">@{{ comment.from_user }}</a></h3>
+            <i class="clock"></i>
+            <time data-time="#">{{ comment.timestamp|naturaltime }}</time>
+            <div class="post">{{ comment.content }}</div>
+            <br>
+            {% if request.user == comment.from_user %}
+              <a class="red" href="{% url 'comment_delete' comment.id %}">Eliminar comentario</a>
+            {% endif %}
+        </div>
+    </div>
+</article>
+{% endfor %}
+
+<form method="POST">
+  {% csrf_token %}
+  <h2>Añadir comentario</h2>
+  {{form.as_p}}
+  <button type="sumbit" clase="post" id="">Añadir comentario</button>
+</form>

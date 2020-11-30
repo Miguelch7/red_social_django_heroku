@@ -1,0 +1,15 @@
+{% extends 'social/layout.html' %}
+{% block content %}
+
+<h1 class="title">Registrarse</h1>
+
+<form class="form" enctype="multipart/form-data" method="POST">
+  {% csrf_token %}
+  {{form.as_p}}
+
+  <button type="submit" id="submit">Registrarse</button>
+  <p>Si ya posee una cuenta, inicie sesión <a class="blue" href="{% url 'register' %}">aquí</a></p>
+
+</form>
+
+{% endblock %}

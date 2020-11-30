@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>Django Social</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{% static 'normalize.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'mystyle.css' %}">
+
+</head>
+<body>
+
+	<header class="main-head">
+		<nav class="main">
+			<h1 id="logo">Django Social</h1>
+			<ul>
+				{% if request.user.is_authenticated %}
+					<li class="dropdown">
+						<a class="profile" href="{% url 'profile' request.user.username %}">
+						<img class="post_comment" src="{{ request.user.profile.image.url }}">
+							@{{ request.user.username }}
+						</a>
+						<div class="dropdown-content">
+							<a href="{% url 'profile_edit' request.user.username %}">Editar Perfil</a>
+							<a href="{% url 'change_image' request.user.username %}">Cambiar foto</a>
+							<a href="{% url 'change_password' %}">Cambiar contraseña</a>
+							<a href="{% url 'logout' %}">Cerrar Sesión</a>
+						</div>
+					</li>
+				{% else %}
+					<li><a href="{% url 'register' %}">Registrarse</a></li>
+					<li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+				{% endif%}
+			</ul>
+		</nav>
+	</header>
+
+	{% if messages %}
+		{% for message in messages %}
+			<div class="notification {{message.tags}}">
+				{{message}}
+			</div>
+		{% endfor %}
+
+	{% endif %}
+
+	<!-------------------------------------
+					Navigation Bar
+	-------------------------------------->
+	<div class="main">
+
+		<nav class="second-nav">
+			<a class="feed" href="{% url 'feed' %}">Inicio</a>
+			{% if request.user.is_authenticated %}
+				<a class="feed" href="{% url 'feed_following' request.user.username %}">Siguiendo</a>
+				<a class="profile" href="{% url 'profile' request.user.username %}">Mi Perfil</a>
+				<a class="new" href="{% url 'post' %}">Crear nuevo post</a>
+			{% endif %}
+		</nav>
+
+
+		{% block content %}
+
+		{% endblock content %}
+
+
+
+	</div>
+
+	<footer>
+		<div class="row">
+			<p>Red Social con Django<br>hecha por: Miguel Chanampa</p>
+		</div>
+	</footer>
+
+</body>
+</html>

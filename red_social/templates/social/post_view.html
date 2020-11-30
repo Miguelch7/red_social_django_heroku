@@ -1,0 +1,46 @@
+{% extends 'social/layout.html' %}
+{% load humanize %}
+{% block content %}
+
+<!-- Post -->
+<article>
+    <div class="container-article">
+        <img src="{{ post.user.profile.image.url }}">
+        <div>
+            <h2 class="username"><a href="{% url 'profile' post.user.username %}">@{{post.user}}</a></h2>
+            <i class="clock"></i>
+            <time data-time="#">{{post.timestamp|naturaltime}}</time>
+            <div class="post">{{post.content}}</div>
+            <br>
+            {% if request.user == post.user %}
+              <a class="blue" href="{% url 'post_edit' post.id %}">Editar</a>
+              |
+              <a class="red" href="{% url 'post_delete' post.id %}">Eliminar</a>
+              <br>
+              <br>
+            {% endif %}
+            <br>
+
+
+            {% if liked %}
+              <a class="post_like liked" href="{% url 'post_like' post.id %}">Likes: {{post.likes.count}}</a>
+            {% else %}
+              <a class="post_like" href="{% url 'post_like' post.id %}">Likes: {{post.likes.count}}</a>
+            {% endif %}
+
+            {% if disliked %}
+              <a class="post_like disliked" href="{% url 'post_dislike' post.id %}">Dislikes: {{post.dislikes.count}}</a>
+            {% else %}
+              <a class="post_like" href="{% url 'post_dislike' post.id %}">Dislikes: {{post.dislikes.count}}</a>
+            {% endif %}
+
+
+        </div>
+    </div>
+</article>
+
+
+<!-- Post comments -->
+{% include 'social/post_comments.html' %}
+
+{% endblock %}
